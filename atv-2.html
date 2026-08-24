@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 2</title>
+    <script src="scripts/jquery-4.0.0.min.js.js"></script>
+    <style>
+        body {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: beige;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fundo {
+            background-color: bisque;
+            width: 90%;
+            max-width: 500px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+        
+        .nav {
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fundo">
+        <label for="bin-2">Binário</label>
+        <input type="text" id="bin-2" placeholder="binário">
+        <label for="oct-8">Octal</label>
+        <input type="text" id="oct-8" placeholder="octal">
+        <label for="dec-10">Decimal</label>
+        <input type="text" id="dec-10" placeholder="decimal">
+        <label for="hex-16">Hexadecimal</label>
+        <input type="text" id="hex-16" placeholder="hexadecimal">
+        <button id="clear" class="bnt">Clear</button>
+
+    </div>
+    <div class="nav">
+        <a id="atv1" href="index.html">1</a>
+        <a id="atv2" href="atv-2.html">2</a>
+        <a id="atv3" href="atv-3.html">3</a>
+    </div>
+</body>
+<script>
+    var last;
+    $("input").on("keyup", function(e) {
+        let val = $(this).val();
+        console.log(val)
+
+        switch ($(this).attr("id")) {
+            case "bin-2":
+                $(this).val(val.replace(/[^0-1]+/g, ""));
+                break;
+            case "oct-8":
+                $(this).val(val.replace(/[^0-7]+/g, ""));
+                break;
+            case "dec-10":
+                $(this).val(val.replace(/[^0-9]+/g, ""));
+                break;
+            case "hex-16":
+                $(this).val(val.replace(/[^0-9a-f]/ig, ""));
+                break;
+            default:
+                console.error("Campo inexistente")
+                break;
+        }
+        last = $(this)
+        calc();
+    })
+    $("#clear").on("click", (e) => {
+        $("input").each(function(i, e) {
+            $(e).val("")
+        })
+    })
+
+    function calc() {
+        if (last.val() === "" || last == undefined) {
+            return;
+        }
+        console.log("calculando: " + last.attr("id"))
+        let id = last.attr("id")
+        let val = $(last).val();
+        let aux;
+        $("input").each(function(i, e) {
+            let baseSelec = parseInt(id.replace(/\D/gi, "").toString());
+            let base = parseInt(($(e).attr("id").replace(/\D/gi, "")))
+            console.log()
+            console.log("baseSelec: " + baseSelec);
+            $(e).val(parseInt(val, baseSelec).toString(base))
+        })
+
+    }
+</script>
+
+</html>

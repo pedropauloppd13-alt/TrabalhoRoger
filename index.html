@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 1</title>
+    <script src="scripts/jquery-4.0.0.min.js.js"></script>
+    <style>
+        body {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: beige;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fundo {
+            background-color: bisque;
+            width: 500px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #letra {
+            font-size: 80px;
+        }
+        
+        img {
+            width: auto;
+            height: 300px;
+        }
+        
+        .nav {
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fundo">
+        <h1 id="letra">
+
+        </h1>
+    </div>
+    <div class="ilustracao">
+        <img id="ilustracao" src="">
+    </div>
+    <div class="nav">
+        <a id="atv1" href="index.html">1</a>
+        <a id="atv2" href="atv-2.html">2</a>
+        <a id="atv3" href="atv-3.html">3</a>
+    </div>
+</body>
+<script>
+    $("html").on("keydown", (e) => {
+        let aux = e.key;
+        if (aux.length > 1) {
+            return
+        }
+        if (!/^[a-zA-Z]$/.test(event.key)) {
+            return;
+        }
+        $("#letra").html(aux)
+        let letra = new SpeechSynthesisUtterance(aux)
+        letra.lang = "pt-BR"; // idioma português
+        letra.rate = 0.9; // velocidade da fala (1 = normal)
+        letra.pitch = 1; // tom da voz
+        letra.volume = 1;
+        console.log(speechSynthesis.getVoices())
+
+        speechSynthesis.cancel(); // interrompe fala anterior, se houver
+        speechSynthesis.speak(letra);
+        //o speach synthesis não funciona no meu pc, mas o chat falow q o código tá 
+        //certo, como eu tô com preguiça de resolver, espero q funcione.
+        if (["a", "e", "i", "o", "u", "y", "d", "A", "E", "I", "O", "U", "Y", "D"].includes(aux)) {
+            mostraVogal(aux)
+        } else {
+            mostraVogal("limpar")
+        }
+    })
+
+    function mostraVogal(letra) {
+        if (letra === "limpar") {
+            $("#ilustracao").attr("src", "")
+        } else {
+            $("#ilustracao").attr("src", "imgs/" + letra + "-img.png")
+        }
+    }
+</script>
+
+</html>

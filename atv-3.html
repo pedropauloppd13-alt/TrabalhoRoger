@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 1</title>
+    <script src="scripts/jquery-4.0.0.min.js.js"></script>
+    <style>
+        body {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: beige;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fundo {
+            background-color: bisque;
+            width: 500px;
+            height: fit-content;
+            min-height: 100%;
+            display: flex;
+            padding-top: 30px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+        }
+        
+        .bloco {
+            height: fit-content;
+            min-height: 50px;
+            width: 90%;
+            background-color: aliceblue;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .add {
+            text-align: center;
+            position: fixed;
+            bottom: 50px;
+        }
+        
+        img {
+            height: 100px;
+            width: auto;
+        }
+        
+        .nav {
+            position: fixed;
+            bottom: 0;
+        }
+        
+        .popupTarefa {
+            position: fixed;
+            top: 0;
+            left: auto;
+            right: auto;
+            width: 350px;
+            background-color: aquamarine;
+            margin: 10px;
+            border-radius: 20px;
+        }
+        
+        .template {
+            display: none;
+        }
+        
+        .nota {
+            width: 340px;
+            margin-top: 10px;
+            background-color: aliceblue;
+            border-radius: 20px;
+            padding: 5px;
+        }
+        
+        .fechar {
+            text-align: right;
+            margin-left: auto;
+        }
+        
+        .nota p {
+            display: inline-block;
+        }
+        
+        .nota input {
+            display: block;
+            margin-left: auto;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h6 {
+            font-size: 20px;
+            height: 30px;
+            margin: 0;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fundo">
+        <div class="add">
+            <input type="text" id="nome" placeholder="nome da nota">
+            <h1 id="nova-nota">+</h1>
+        </div>
+        <div class="lista">
+
+        </div>
+    </div>
+    <div class="nav">
+        <a id="atv1" href="index.html">1</a>
+        <a id="atv2" href="atv-2.html">2</a>
+        <a id="atv3" href="atv-3.html">3</a>
+    </div>
+</body>
+<script>
+    var data = new Date();
+
+    var dataStr = data.toDateString();
+
+    $("#nova-nota").on("click", function(e) {
+        $('.lista').append(`<div class="nota">
+            <h5>${$('#nome').val()}</h5>
+            <p>${dataStr}</p>
+            <h6 class="fechar">x</h6>
+            <input type="checkbox" id="nome">
+            </div>`)
+        $('#nome').val('')
+        localStorage.setItem('lista', $('.lista').html())
+    })
+    $(".lista").on("change", "input[type='checkbox']", function(e) {
+        $(this).attr("checked", this.checked);
+        localStorage.setItem("lista", $(".lista").html());
+    });
+
+    $(".lista").on("click", ".fechar", function(e) {
+        $(this).parent('.nota').remove();
+        localStorage.setItem("lista", $(".lista").html());
+    })
+
+    function desenhar() {
+        $('.lista').append(localStorage.getItem('lista'))
+    }
+    desenhar()
+</script>
+
+</html>
